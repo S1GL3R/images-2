@@ -1,0 +1,291 @@
+:root{
+    --cdmx-color-principal: #235B4E;
+    --cdmx-color-secundario: #BC955C;
+    --cdmx-color-gris: #333333;
+    --cdmx-color-principal-hex: 35, 91, 78;
+}
+
+.svg-saf{
+    width: 22em;
+    height: 5em;
+    background: url('../img/logos/logo_saf.svg') no-repeat center center;
+    background-size: contain;
+}
+
+.cdmx-bg-principal{
+    background-color: var(--cdmx-color-principal) !important
+}
+
+.borde_inferior{
+    border-bottom: 7px solid var(--cdmx-color-secundario);
+}
+
+.btn-drop-cdmx{
+    /*font-size: 20px;*/
+    font-weight: 500;
+    letter-spacing: .0009em;
+}
+
+.btn-drop-cdmx:not(:disabled):not(.disabled):active, .btn-drop-cdmx:not(:disabled):not(.disabled).active, .show > .btn-drop-cdmx.dropdown-toggle {
+    color: #fff;
+    background-color: var(--cdmx-color-principal);
+}
+
+#kt_header_menu > ul > li:nth-child(n) > a:hover{
+    background-color: var(--cdmx-color-principal) !important;
+}
+
+#kt_header_menu > ul > li:nth-child(n) > a:not(:hover){
+    background-color: var(--cdmx-color-principal) !important;
+}
+
+.no-a-style{
+    text-decoration: none !important;
+}
+
+.dropelementos a:active{
+
+        background-color: var(--cdmx-color-gris);
+    
+}
+
+.bgAcorddionConsulta{
+    height: 100%;
+    width: 100%;
+    background: url('../img/consulta_pagos/imagenes-19.jpg') right center no-repeat;
+    background-size: 45%;
+}
+
+.bgFooterItems{
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 45%;
+}
+
+.cdmxFiller{
+    filter: invert(42%) sepia(97%) saturate(1008%) hue-rotate(69deg) brightness(100%) contrast(103%);
+
+}
+
+.cdmx-colorv{
+    color: var(--cdmx-color-principal) !important
+}
+
+.cdmx-l-border{
+    border-left: 2px solid var(--cdmx-color-gris);
+}
+
+.cdmx-r-border{
+    border-right: 2px solid var(--cdmx-color-gris);
+}
+
+.cdmx-rl-border{
+    border-right: 2px solid var(--cdmx-color-gris);
+}
+
+.cdmx-full-border{
+    border-style: solid;
+    border-color: var(--cdmx-color-principal);
+}
+
+span.cdmx-l-border{
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-cdmx{
+    color: #fff !important;
+    background-color: var(--cdmx-color-principal);
+    border-color: var(--cdmx-color-principal);
+}
+
+.btn-cdmx.disabled, .btn-cdmx:disabled {
+    color: #CBCBCB !important;
+    background-color: #DBF3E4 !important;
+    border-color: #DBF3E4 !important; }
+
+.text-red{
+    color: red;
+}
+
+.bg-color-cdmx-gris{
+    background-color: var(--cdmx-color-gris);
+}
+
+.overflow-wrap-any{
+    overflow-wrap: anywhere !important;
+}
+
+.req {
+    color: red;
+}
+
+/** begin:Sobre-escribir color acordion cdmx **/ 
+.cdmx-accordion .card-header .card-title.collapsed {
+    color: #777 !important;
+}
+.cdmx-accordion .card-header .card-title.collapsed > i {
+    color: #d7d7dc !important;
+}
+
+.cdmx-accordion .card-header .card-title.collapsed {
+    color: #d7d7dc !important;
+}
+
+.cdmx-accordion .card-header .card-title.collapsed:after {
+    color: #d7d7dc !important;
+    content: "";
+}
+
+.cdmx-accordion .card-header .card-title {
+    color: #EEE !important;
+    font-size: 38px;
+    font-weight: bold;
+    background-color : var(--cdmx-color-principal) !important;
+}
+
+.cdmx-accordion .card-header .card-title:after {
+    color: #EEE !important;
+    font-size: 38px;
+    font-weight: bold;
+}
+.cdmx-accordion .card-header .card-title > i {
+    color: #EEE;
+}
+.cdmx-accordion .card-header .card-title .title-conceptos {
+    color: #EEE;
+    font-size: 1.3em;
+    text-align: center !important;
+    width: 100%;
+}
+/** end:acordion color cdmx **/
+
+.card-header .fa {
+    transition: .3s transform ease-in-out;
+  }
+
+
+.nav-pills .nav-item .nav-link:active, .nav-pills .nav-item .nav-link.active, .nav-pills .nav-item .nav-link.active:hover {
+    background-color: var(--cdmx-color-principal) !important;
+    color: #ffffff;
+}
+
+.alert.alert-outline-cdmx {
+    border: 1px solid  var(--cdmx-color-principal);    
+}
+
+.alert.alert-info-cdmx {
+    background: #9F2149 !important;
+    border: 1px solid  #9F2149;
+    color: #fff;
+}
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 150px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;    
+    opacity: .55;
+}
+
+/*
+| Elementos Responsive
+*/
+.menu-conceptos img{
+    max-width: 100%;
+}
+@media screen and (max-width: 800px) {
+
+}
+
+.bg-cdmx-principal{
+    background-color: var(--cdmx-color-principal) !important;
+}
+
+.text-footer-color{
+    color: white !important;
+}
+
+.text-gray{
+    color: #74788d !important;
+}
+
+#myModal {
+    height: 80%;
+}
+
+.border-cdmx-principal {
+    border: 1px solid var(--cdmx-color-principal);
+}
+
+.box-link:hover {
+    cursor: pointer;
+    background: var(--cdmx-color-principal);
+    opacity: 0.5;
+    color: white;
+}
+
+.box-item:checked + .box-link {
+    background: var(--cdmx-color-principal);
+    color: white;
+}
+
+.d-scroll{
+    height: 0px; 
+    overflow-y: scroll;
+}
+
+.h-200px{
+    height: 200px; 
+}
+
+.h-350px{
+    height: 350px; 
+}
+
+.table-cdmx-principal .page-item.disabled .page-link {
+    background: #ebe9f2 !important;
+    color: black !important;
+}
+
+.table-cdmx-principal .page-item.active .page-link {
+    background: var(--cdmx-color-principal) !important;
+}
+
+.table-cdmx-principal .page-item .page-link:hover {
+    background: var(--cdmx-color-principal) !important;
+}
+
+@media(max-width: 767.27px){
+    .d-scroll{
+        height: 100px !important;
+    }
+
+    .w-19pct {
+        width: 19% !important;
+    }
+
+    .bdr-bottom{
+        border: none !important;
+        border-bottom: 1px solid lightgrey !important;
+    }
+
+    .display-flex-dir-row {
+        display: flex !important;
+        flex-direction: row !important;
+    }
+
+    .w-49pct {
+        width: 49% !important;
+    }
+}
+
+@media(max-width: 400px){
+    .mw-100pct {
+        min-width: 100% !important;
+    }
+}
