@@ -8,7 +8,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background-color: black;
+      background-color: #f980af;
       overflow: hidden;
       height: 100%;
       font-family: monospace;
@@ -16,35 +16,22 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      color: #00ff00;
+      color: white;
     }
 
-    .loader, .hack-text {
+    #startButton {
+      background-color: #f34f8a;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 8px;
       z-index: 1;
     }
 
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 8px solid #00ff00;
-      border-top: 8px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 1rem;
-    }
-
-    .loading-text {
-      font-size: 1.5rem;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes blink {
-      50% { opacity: 0.3; }
+    #startButton:active {
+      transform: scale(0.98);
     }
 
     .hack-screen {
@@ -82,16 +69,14 @@
   </style>
 </head>
 <body>
-  <div class="loader"></div>
-  <div class="loading-text">Cargando...</div>
+  <button id="startButton">¡Regístrate ahora!</button>
 
   <div class="hack-screen" id="hackScreen">
     <div class="hack-text" id="hackText">¡ACCESO NO AUTORIZADO DETECTADO!</div>
   </div>
 
-  <video id="finalVideo" src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp4" muted playsinline></video>
+  <video id="finalVideo" src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp4" muted playsinline preload="auto"></video>
   <audio id="introAudio" src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/hacking2.mp3"></audio>
-  <audio id="videoAudio" src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp3"></audio> <!-- Reemplaza con tu audio real -->
 
   <script>
     let touched = false;
@@ -100,23 +85,31 @@
       if (touched) return;
       touched = true;
 
-      // Inicia audio de introducción
       const introAudio = document.getElementById('introAudio');
-      introAudio.play().catch(err => console.log("No se pudo reproducir introAudio:", err));
-
-      // Oculta pantalla de carga después de 12s
-      document.querySelector('.loader').style.display = 'none';
-      document.querySelector('.loading-text').style.display = 'none';
-
       const hackScreen = document.getElementById('hackScreen');
       const hackText = document.getElementById('hackText');
       const video = document.getElementById('finalVideo');
       const videoAudio = document.getElementById('videoAudio');
 
-      // Muestra pantalla "hack"
+      // Prepara el video desde el inicio
+      video.load();
+      video.play().then(() => {
+        video.pause(); // Se pausa inmediatamente para que quede listo al 100%
+        video.currentTime = 0; // Vuelve al inicio si empezó
+      }).catch(err => {
+        console.log("Video no pudo precargarse automáticamente:", err);
+      });
+
+      
+      // Oculta el botón de inicio
+      document.getElementById('startButton').style.display = 'none';
+
+      // Reproduce audio de introducción
+      introAudio.play().catch(err => console.log("Error al reproducir introAudio:", err));
+
+      // Muestra pantalla de hack
       hackScreen.style.display = 'flex';
 
-      // Simula mensajes parpadeantes por 12 segundos
       const warnings = [
         "ACCESO NO AUTORIZADO DETECTADO",
         "TRANSFERENCIA EN CURSO...",
@@ -136,23 +129,24 @@
         i++;
       }, 500);
 
-      // Después de 12s, muestra video y su audio
+      // Después de 12s, reproducir video y su audio
       setTimeout(() => {
         clearInterval(interval);
         hackScreen.style.display = 'none';
 
         video.style.display = 'block';
-        video.play().catch(err => {
+        video.play().catch(() => {
           hackText.textContent = "No se pudo iniciar el video.";
           hackScreen.style.display = 'flex';
         });
 
-        videoAudio.play().catch(err => console.log("No se pudo reproducir videoAudio:", err));
+        videoAudio.play().catch(err => console.log("Error al reproducir videoAudio:", err));
       }, 12000);
     }
 
-    window.addEventListener("touchstart", startSequence, { once: true });
-    window.addEventListener("click", startSequence, { once: true });
+    // Escucha clic o toque en el botón
+    document.getElementById("startButton").addEventListener("click", startSequence);
+    document.getElementById("startButton").addEventListener("touchstart", startSequence);
   </script>
 </body>
 </html>
