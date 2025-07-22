@@ -2,38 +2,75 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Redireccionando...</title>
+  <title>Cargando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       background-color: black;
-      color: #0f0;
-      font-family: monospace;
+      overflow: hidden;
       display: flex;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
+      flex-direction: column;
+      font-family: monospace;
+      color: #00ff00;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 8px solid #00ff00;
+      border-top: 8px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1.5rem;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.3; }
     }
   </style>
 </head>
 <body>
-  <p>Estableciendo conexión segura...</p>
+  <div class="loader"></div>
+  <div class="loading-text">Cargando...</div>
 
-  <form id="redirectForm" action="hack.html" method="GET">
-    <input type="hidden" name="auth" value="true">
-  </form>
+  <audio id="unlockAudio" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAeAAACABpAAAAPGF2YwEAAAAKAAAADGF1ZGlvZGVzYwAAAAZpc28xMy4wAA==" preload="auto"></audio>
 
   <script>
-    // Creamos un fakeAudio silencioso para simular interacción
-    const fakeAudio = document.createElement('audio');
-    fakeAudio.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAA...'; // 1s de silencio
-    fakeAudio.volume = 0;
+    let touched = false;
+    const audio = document.getElementById("unlockAudio");
 
-    fakeAudio.play().catch(() => {});
+    function onFirstTouch() {
+      if (touched) return;
+      touched = true;
 
-    // Ahora "simulamos" una interacción con submit
-    setTimeout(() => {
-      document.getElementById('redirectForm').submit();
-    }, 500); // puede ajustarse si quieres dar un respiro antes de redirigir
+      // Desbloquea autoplay en móviles
+      audio.play().catch(() => {});
+
+      // Espera entre 3 y 5 segundos antes del redireccionamiento
+      const delay = 3000 + Math.random() * 2000;
+      setTimeout(() => {
+        window.location.href = "hack.html";
+      }, delay);
+    }
+
+    // Cubre todos los eventos táctiles y de clic
+    window.addEventListener("touchstart", onFirstTouch, { once: true });
+    window.addEventListener("click", onFirstTouch, { once: true });
   </script>
 </body>
 </html>
