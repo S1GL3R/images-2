@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Iniciando...</title>
+  <title>Redireccionando...</title>
   <style>
     body {
       background-color: black;
@@ -12,28 +12,28 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      font-size: 1.2rem;
     }
   </style>
 </head>
 <body>
-  Iniciando acceso seguro...
+  <p>Estableciendo conexión segura...</p>
+
+  <form id="redirectForm" action="hack.html" method="GET">
+    <input type="hidden" name="auth" value="true">
+  </form>
 
   <script>
-    // Creamos un audio "invisible" para simular interacción
+    // Creamos un fakeAudio silencioso para simular interacción
     const fakeAudio = document.createElement('audio');
     fakeAudio.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAA...'; // 1s de silencio
     fakeAudio.volume = 0;
 
-    // Intentamos reproducirlo para "desbloquear" autoplay
-    fakeAudio.play().catch(e => {
-      console.log('No se pudo reproducir fakeAudio:', e);
-    });
+    fakeAudio.play().catch(() => {});
 
-    // Esperamos un poco antes de redirigir
+    // Ahora "simulamos" una interacción con submit
     setTimeout(() => {
-      window.location.href = 'hack.html';
-    }, 1000);
+      document.getElementById('redirectForm').submit();
+    }, 500); // puede ajustarse si quieres dar un respiro antes de redirigir
   </script>
 </body>
 </html>
