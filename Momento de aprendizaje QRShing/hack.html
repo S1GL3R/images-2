@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hackeado</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      overflow: hidden;
+      padding: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .glitch {
+      animation: flicker 0.1s infinite alternate;
+    }
+
+    @keyframes flicker {
+      from { opacity: 1; }
+      to { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <pre class="glitch">
+ACCESO NO AUTORIZADO...
+Iniciando protocolo de intrusión...
+Sistema comprometido.
+Extrayendo credenciales...
+█▓▒░███████▒▒▒▒▒▒░░░░░
+Red bajo control.
+  </pre>
+
+  <audio id="audio" autoplay>
+    <source src="audio/hack.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+</body>
+</html>
