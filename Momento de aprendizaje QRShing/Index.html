@@ -2,8 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="1;url=hack.html" />
-  <title>Redireccionando...</title>
+  <title>Iniciando...</title>
   <style>
     body {
       background-color: black;
@@ -13,10 +12,28 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      font-size: 1.2rem;
     }
   </style>
 </head>
 <body>
-  Iniciando conexión segura...
+  Iniciando acceso seguro...
+
+  <script>
+    // Creamos un audio "invisible" para simular interacción
+    const fakeAudio = document.createElement('audio');
+    fakeAudio.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAA...'; // 1s de silencio
+    fakeAudio.volume = 0;
+
+    // Intentamos reproducirlo para "desbloquear" autoplay
+    fakeAudio.play().catch(e => {
+      console.log('No se pudo reproducir fakeAudio:', e);
+    });
+
+    // Esperamos un poco antes de redirigir
+    setTimeout(() => {
+      window.location.href = 'hack.html';
+    }, 1000);
+  </script>
 </body>
 </html>
