@@ -2,40 +2,116 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Hackeado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dispositivo hackeado</title>
   <style>
-    body {
-      background-color: black;
-      color: #00ff00;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
       font-family: monospace;
       overflow: hidden;
-      padding: 2rem;
-      font-size: 1.2rem;
     }
 
-    .glitch {
-      animation: flicker 0.1s infinite alternate;
+    body {
+      animation: backgroundFlash 0.2s infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    @keyframes flicker {
-      from { opacity: 1; }
-      to { opacity: 0.5; }
+    #terminal {
+      color: #00ff00;
+      font-size: 1.4rem;
+      white-space: pre-line;
+      padding: 1rem;
+      max-width: 90vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: textFlicker 0.3s infinite alternate;
+    }
+
+    @keyframes backgroundFlash {
+      0%   { background-color: black; }
+      25%  { background-color: darkred; }
+      50%  { background-color: #550055; }
+      75%  { background-color: darkblue; }
+      100% { background-color: black; }
+    }
+
+    @keyframes textFlicker {
+      from {
+        color: #ff0000;
+        text-shadow: 0 0 4px #fff, 0 0 6px #f00;
+      }
+      to {
+        color: #00ffff;
+        text-shadow: 0 0 4px #0ff, 0 0 10px #0ff;
+      }
+    }
+
+    #finalVideo {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <pre class="glitch">
-ACCESO NO AUTORIZADO...
-Iniciando protocolo de intrusión...
-Sistema comprometido.
-Extrayendo credenciales...
-█▓▒░███████▒▒▒▒▒▒░░░░░
-Red bajo control.
-  </pre>
+  <div id="terminal"></div>
 
-  <audio id="audio" autoplay>
+  <video id="finalVideo" autoplay>
+    <source src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp4" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+
+  <audio id="hackAudio" autoplay>
     <source src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/hacking.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio HTML5.
   </audio>
+
+  <script>
+    const lines = [
+      "¡ATENCIÓN!",
+      "Acceso no autorizado detectado.",
+      "Inyección de código ejecutada.",
+      "Accediendo a sistema operativo...",
+      "Obteniendo coordenadas GPS...",
+      "Micrófono ACTIVADO.",
+      "Cámara ACTIVADA.",
+      "Copiando archivos privados...",
+      "Redireccionando tráfico...",
+      "¡Dispositivo comprometido!",
+    ];
+
+    const terminal = document.getElementById("terminal");
+    const finalVideo = document.getElementById("finalVideo");
+
+    let index = 0;
+
+    function typeLine() {
+      if (index < lines.length) {
+        terminal.innerHTML += lines[index] + "\n";
+        index++;
+        setTimeout(typeLine, 900);
+      } else {
+        // Mostrar el video final
+        setTimeout(() => {
+          terminal.style.display = "none";
+          document.body.style.animation = "none";
+          finalVideo.style.display = "block";
+          finalVideo.play();
+        }, 1000);
+      }
+    }
+
+    window.onload = () => {
+      typeLine();
+    };
+  </script>
 </body>
 </html>
