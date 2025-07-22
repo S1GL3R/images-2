@@ -2,21 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Cargando...</title>
+  <title>Simulación</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       background-color: black;
       overflow: hidden;
+      height: 100%;
+      font-family: monospace;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      font-family: monospace;
       color: #00ff00;
+    }
+
+    .loader, .hack-text {
+      z-index: 1;
     }
 
     .loader {
@@ -29,18 +33,51 @@
       margin-bottom: 1rem;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     .loading-text {
       font-size: 1.5rem;
       animation: blink 1s step-end infinite;
     }
 
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+
     @keyframes blink {
       50% { opacity: 0.3; }
+    }
+
+    .hack-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: black;
+      z-index: 100;
+      color: red;
+      text-align: center;
+    }
+
+    .hack-text {
+      font-size: 2rem;
+      animation: flash 0.2s infinite;
+    }
+
+    @keyframes flash {
+      0%, 100% { color: red; background-color: black; }
+      50% { color: black; background-color: red; }
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 200;
     }
   </style>
 </head>
@@ -48,29 +85,64 @@
   <div class="loader"></div>
   <div class="loading-text">Cargando...</div>
 
-  <audio id="unlockAudio" src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAeAAACABpAAAAPGF2YwEAAAAKAAAADGF1ZGlvZGVzYwAAAAZpc28xMy4wAA==" preload="auto"></audio>
+  <div class="hack-screen" id="hackScreen">
+    <div class="hack-text" id="hackText">¡ACCESO NO AUTORIZADO DETECTADO!</div>
+  </div>
+
+  <video id="finalVideo" src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp4" playsinline></video>
 
   <script>
     let touched = false;
-    const audio = document.getElementById("unlockAudio");
 
-    function onFirstTouch() {
+    function startSequence() {
       if (touched) return;
       touched = true;
 
-      // Desbloquea autoplay en móviles
-      audio.play().catch(() => {});
+      // Oculta pantalla de carga
+      document.querySelector('.loader').style.display = 'none';
+      document.querySelector('.loading-text').style.display = 'none';
 
-      // Espera entre 3 y 5 segundos antes del redireccionamiento
-      const delay = 3000 + Math.random() * 2000;
+      const hackScreen = document.getElementById('hackScreen');
+      const hackText = document.getElementById('hackText');
+      const video = document.getElementById('finalVideo');
+
+      // Muestra pantalla "hack"
+      hackScreen.style.display = 'flex';
+
+      // Simula mensajes parpadeantes por 10 segundos
+      const warnings = [
+        "ACCESO NO AUTORIZADO DETECTADO",
+        "TRANSFERENCIA EN CURSO...",
+        "COPIA DE SEGURIDAD DETECTADA",
+        "DESCARGANDO ARCHIVOS...",
+        "SISTEMA COMPROMETIDO",
+        "LOCALIZANDO UBICACIÓN GPS...",
+        "ACCESO A CÁMARA ACTIVADO",
+        "ELIMINANDO DATOS...",
+        "ENVIANDO INFORMACIÓN...",
+        "FALLA DEL SISTEMA"
+      ];
+
+      let i = 0;
+      const interval = setInterval(() => {
+        hackText.textContent = warnings[i % warnings.length];
+        i++;
+      }, 500);
+
+      // Después de 10s, muestra video
       setTimeout(() => {
-        window.location.href = "hack.html";
-      }, delay);
+        clearInterval(interval);
+        hackScreen.style.display = 'none';
+        video.style.display = 'block';
+        video.play().catch(() => {
+          hackText.textContent = "No se pudo iniciar el video.";
+          hackScreen.style.display = 'flex';
+        });
+      }, 10000);
     }
 
-    // Cubre todos los eventos táctiles y de clic
-    window.addEventListener("touchstart", onFirstTouch, { once: true });
-    window.addEventListener("click", onFirstTouch, { once: true });
+    window.addEventListener("touchstart", startSequence, { once: true });
+    window.addEventListener("click", startSequence, { once: true });
   </script>
 </body>
 </html>
