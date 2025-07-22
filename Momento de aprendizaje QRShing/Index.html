@@ -2,147 +2,92 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Simulación</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulación de Hackeo</title>
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
       background-color: black;
       overflow: hidden;
-      height: 100%;
       font-family: monospace;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      color: #00ff00;
-    }
-
-    .loader, .hack-text {
-      z-index: 1;
-    }
-
-    .loader {
-      width: 60px;
-      height: 60px;
-      border: 8px solid #00ff00;
-      border-top: 8px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 1rem;
-    }
-
-    .loading-text {
-      font-size: 1.5rem;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes blink {
-      50% { opacity: 0.3; }
-    }
-
-    .hack-screen {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background-color: black;
-      z-index: 100;
-      color: red;
       text-align: center;
     }
 
-    .hack-text {
-      font-size: 2rem;
-      animation: flash 0.2s infinite;
+    #cargando {
+      font-size: 1.5rem;
+      animation: parpadeo 1s infinite;
     }
 
-    @keyframes flash {
-      0%, 100% { color: red; background-color: black; }
-      50% { color: black; background-color: red; }
+    @keyframes parpadeo {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
     }
 
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    #videoFinal {
       display: none;
-      position: fixed;
-      top: 0; left: 0;
-      z-index: 200;
+      width: 75%;
+      height: 75%;
+      object-fit: cover;
     }
   </style>
 </head>
 <body>
-  <div class="loader"></div>
-  <div class="loading-text">Cargando...</div>
-
-  <div class="hack-screen" id="hackScreen">
-    <div class="hack-text" id="hackText">¡ACCESO NO AUTORIZADO DETECTADO!</div>
+  <div id="contenido">
+    <p id="cargando">Cargando...</p>
+    <audio id="audio" preload="auto">
+      <source src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/hacking.mp3" type="audio/mpeg" />
+    </audio>
+    <video id="videoFinal" controls>
+      <source src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp4" type="video/mp4" />
+      Tu navegador no puede reproducir el video.
+    </video>
   </div>
 
-  <video id="finalVideo" src="https://s1gl3r.github.io/images-2/Momento%20de%20aprendizaje%20QRShing/final.mp4" playsinline></video>
-
   <script>
-    let touched = false;
+    let activado = false;
 
-    function startSequence() {
-      if (touched) return;
-      touched = true;
+    function iniciarHackeo() {
+      if (activado) return;
+      activado = true;
 
-      // Oculta pantalla de carga
-      document.querySelector('.loader').style.display = 'none';
-      document.querySelector('.loading-text').style.display = 'none';
+      const audio = document.getElementById("audio");
+      const video = document.getElementById("videoFinal");
+      const cargando = document.getElementById("cargando");
 
-      const hackScreen = document.getElementById('hackScreen');
-      const hackText = document.getElementById('hackText');
-      const video = document.getElementById('finalVideo');
+      // Intentar reproducir audio al primer toque
+      audio.play().catch(() => {
+        console.warn("Error al reproducir audio, puede estar bloqueado por el navegador");
+      });
 
-      // Muestra pantalla "hack"
-      hackScreen.style.display = 'flex';
+      // Simular espera tras la interacción del usuario
+      cargando.innerText = "Accediendo al sistema...";
 
-      // Simula mensajes parpadeantes por 10 segundos
-      const warnings = [
-        "ACCESO NO AUTORIZADO DETECTADO",
-        "TRANSFERENCIA EN CURSO...",
-        "COPIA DE SEGURIDAD DETECTADA",
-        "DESCARGANDO ARCHIVOS...",
-        "SISTEMA COMPROMETIDO",
-        "LOCALIZANDO UBICACIÓN GPS...",
-        "ACCESO A CÁMARA ACTIVADO",
-        "ELIMINANDO DATOS...",
-        "ENVIANDO INFORMACIÓN...",
-        "FALLA DEL SISTEMA"
-      ];
-
-      let i = 0;
-      const interval = setInterval(() => {
-        hackText.textContent = warnings[i % warnings.length];
-        i++;
-      }, 500);
-
-      // Después de 10s, muestra video
       setTimeout(() => {
-        clearInterval(interval);
-        hackScreen.style.display = 'none';
-        video.style.display = 'block';
-        video.play().catch(() => {
-          hackText.textContent = "No se pudo iniciar el video.";
-          hackScreen.style.display = 'flex';
-        });
-      }, 10000);
+        cargando.innerText = "Sistema comprometido. Mostrando video...";
+        setTimeout(() => {
+          document.body.style.backgroundColor = "black";
+          cargando.style.display = "none";
+          video.style.display = "block";
+          video.play().catch(() => {
+            console.warn("Error al reproducir video");
+          });
+        }, 2000);
+      }, 3000 + Math.random() * 2000); // 3 a 5 segundos
     }
 
-    window.addEventListener("touchstart", startSequence, { once: true });
-    window.addEventListener("click", startSequence, { once: true });
+    // Detectar toque o clic
+    document.body.addEventListener("touchstart", iniciarHackeo, { once: true });
+    document.body.addEventListener("click", iniciarHackeo, { once: true });
   </script>
 </body>
 </html>
